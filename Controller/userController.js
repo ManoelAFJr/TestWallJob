@@ -1,4 +1,5 @@
 const User = require('../Model/user');
+const passport = require('passport');
 
 // Path: Controller/userController.js
 const registerUser = async (userdata, errorCallBack) => {
@@ -18,23 +19,23 @@ const registerUser = async (userdata, errorCallBack) => {
 };
 
 // Path: Controller/userController.js
-const loginUser = async (userdata, errorCallBack) => {
-  try {
-    const user = await User
-      .findOne
-      ({email: userdata.email});
-    if (!user) {
-      return false;
-    }
-    const isMatch = await user.checkPassword(userdata.password);
-    if (!isMatch) {
-      return false;
-    }
-    return user;  
-  } catch (error) {
-    errorCallBack(error);
-  }
-};
+// const loginUser = async (userdata, errorCallBack) => {
+//   try {
+//     const user = await User
+//       .findOne
+//       ({email: userdata.email});
+//     if (!user) {
+//       return false;
+//     }
+//     const isMatch = await user.checkPassword(userdata.password);
+//     if (!isMatch) {
+//       return false;
+//     }
+//     return user;  
+//   } catch (error) {
+//     errorCallBack(error);
+//   }
+// };
 
 // Path: Controller/userController.js
 const getUser = async (id, errorCallBack) => {
@@ -50,6 +51,5 @@ const getUser = async (id, errorCallBack) => {
 
 module.exports = {
   registerUser,
-  loginUser,
   getUser,
 };
