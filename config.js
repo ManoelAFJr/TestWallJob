@@ -1,6 +1,6 @@
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const User = require('./Model/userModel');
+const passport = require("passport");
+const localStrategy = require("passport-local").Strategy;
+const User = require("./Model/userModel");
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
@@ -12,20 +12,32 @@ module.exports = () => {
       done(err, user);
     });
   });
-  
-  passport.use('local', new LocalStrategy((email, password, done) => {
-    User.findOne({email}, (err, user) => {
-      if (err) return done(err);
-      if (!user) return done(null, false, {message: 'Incorrect email.'});
-      user.checkPassword(password, (err, isMatch) => {
-        if (err) return done(err);
-        if (isMatch) {
-          return done(null, user);
-        } else {
-          return done(null, false, {message: 'Incorrect password.'});
-        }
-      });
-    });
-  }));
-};
 
+  passport.use("login", new localStrategy(
+      {
+        usernameField: "email",
+        passwordField: "password",
+        passReqToCallback: true,
+      },
+      async (req, email, password, done) => {
+        try {
+          const user = await User.findOne({ email: email });
+          if (!user) {
+            return done(null, false, {json: {error: "User not found"}});
+          }
+          const validate = await user.checkPassword(password, (err, isMatch) => {
+            if(err){
+              return done(err);
+            }
+            if(isMatch){
+              return done(null, user);
+            }
+            return done(null, false, {json: {error: "Invalid password"}});
+          });
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
+};

@@ -1,5 +1,6 @@
 const User = require('../Model/userModel');
 const passport = require('passport');
+const { find } = require('../Model/userModel');
 
 // Path: Controller/userController.js
 const registerUser = async (userdata, errorCallBack) => {
@@ -19,31 +20,11 @@ const registerUser = async (userdata, errorCallBack) => {
 };
 
 // Path: Controller/userController.js
-// const loginUser = async (userdata, errorCallBack) => {
-//   try {
-//     const user = await User
-//       .findOne
-//       ({email: userdata.email});
-//     if (!user) {
-//       return false;
-//     }
-//     const isMatch = await user.checkPassword(userdata.password);
-//     if (!isMatch) {
-//       return false;
-//     }
-//     return user;  
-//   } catch (error) {
-//     errorCallBack(error);
-//   }
-// };
-
-// Path: Controller/userController.js
 const getUser = async (id, errorCallBack) => {
   try {
-    const user = await User
-      .findById(id) 
-      .select('-password');
-    return user;
+    const users = await User
+    .find().sort({ createdAt: "descending" });
+    return users;
   } catch (error) {
     errorCallBack(error);
   }
