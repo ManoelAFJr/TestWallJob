@@ -1,5 +1,6 @@
 # Test_WallJobs
- 
+* Manoel Junior Aluno  ADS-IFPB 4° periodo
+
 # Para rodar os tests:
 ```
   Sugiro subir a aplicação antes de suber os testes!
@@ -24,7 +25,7 @@ para usar todas as dependencias do projeto basta usar o comando
  npm i --save 
 ```
 ## segurança 
-*foi usado as ferramentas para gerar tokens cookies
+* foi usado as ferramentas para gerar tokens cookies
 
 ## documentação via Swagger
 *Rota documentação
