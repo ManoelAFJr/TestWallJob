@@ -1,4 +1,4 @@
-const User = require('../Model/user');
+const User = require('../Model/userModel');
 const passport = require('passport');
 
 // Path: Controller/userController.js

@@ -1,15 +1,14 @@
 const bcrypt = require('bcryptjs');
-
 const mongoose = require('../Database/data');
-const Schema = mongoose.Schema;
 
-const UserSchema = new Schema({
+const UserSchema = mongoose.Schema({
   name: {
     firstName: {type: String, required: true},
     lastName: {type: String, required: true}
   },
   email: {type:String, required: true, unique: true},
-  password: {type: String, required: true}
+  password: {type: String, required: true}, 
+  createdAt: {type: Date, default: Date.now}
 });
 
 UserSchema.pre('save', function(next) {
@@ -32,5 +31,5 @@ UserSchema.methods.checkPassword = function(passwordAttempt, callback) {
   });
 };
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('Persons', UserSchema);
 module.exports = User;

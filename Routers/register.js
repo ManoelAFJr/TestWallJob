@@ -9,7 +9,6 @@ routerRegister.post('/register', async (req, res) => {
     res.status(500).json({error});
   });
   if (!user) {
-    // req.flash('error', 'User already exists');
     res.status(400).json({error: 'User already'});
   }
   res.status(200).json({user});
